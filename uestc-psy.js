@@ -38,6 +38,7 @@ let finished_count = 0 //已经点评的人数
 let next_signal = 0 //记录setTimeout
 let curent_quiz = 0 //当前单元数
 let unfinished = 0 //未完成的作业
+let unfinished_flag = false //作业未完成标记位
 
 //自评，6000ms
 function self_eva() {
@@ -111,7 +112,7 @@ function step() {
         //结束step循环
         clearTimeout(next_signal)
         //返回到上级
-        document.getElementsByClassName('j-backbtn')[1].click()
+        document.getElementsByClassName('j-backbtn')[0].click()
         //下一单元
         setTimeout(() => {
             eva_init()
@@ -153,6 +154,8 @@ function step() {
 
 //每个单元的初始化
 function eva_init() {
+    //重置
+    unfinished_flag = false
     //获取'前往作业'按钮
     const btns = Array.prototype.slice.call(document.getElementsByClassName('j-quizBtn')).filter((e) => e.innerText === '前往作业')
     //全部完毕，结束
@@ -165,10 +168,20 @@ function eva_init() {
     btns[curent_quiz].click()
     //需要互评的人数，有延迟
     setTimeout(() => {
-        answer_count = 30 - document.getElementsByClassName('j-listtable')[0].childElementCount
+        try {
+            answer_count = 30 - document.getElementsByClassName('j-listtable')[0].childElementCount
+            finished_count = 0 //重置已完成
+        }
+        catch(err) {
+            //没有写这个作业
+            answer_count = 30 //因为延迟的麻烦，逻辑有点乱，先暂时这样
+            unfinished_flag = true
+        }
     },1000)
     //进入互评，注意如果之前点击过，则a标签是'继续进行互评'，同时读取到的数量会多1个，如果没点击过，则是'开始评分'
     setTimeout(() => {
+        if(unfinished_flag)
+            return
         const ctn_eva = Array.prototype.slice.call(document.getElementsByTagName('a')).filter((e) => e.innerText === '继续进行互评')
         if(ctn_eva.length === 1){
             answer_count += 1
