@@ -1,3 +1,7 @@
+//设置项
+//是否答题者可见，false=不可见，true=可见
+const config_answer_visible = false
+
 function random(n,m) {
     return Math.floor(Math.random() * (m - n + 1) + n)
 }
@@ -124,22 +128,26 @@ function step() {
     setTimeout(() => {
         document.getElementsByName('inputtxt')[0].value = random_answer()
     },2000)
+    //设置是否可见
+    setTimeout(() => {
+        document.getElementsByClassName('j-acb')[0].checked = config_answer_visible
+    },3000)
     //保存答案
     setTimeout(() => {
         document.getElementsByClassName('j-savedraftbtn')[0].click()
-    },3000)
+    },4000)
     //提交
     setTimeout(() => {
         document.getElementsByClassName('j-submitbtn')[0].click()
-    },4000)
+    },5000)
     //下一个人
     setTimeout(() => {
         document.getElementsByClassName('j-gotonext')[0].click()
-    },5000)
+    },6000)
     //循环
     next_signal = setTimeout(() => {
         step()
-    },6000)
+    },7000)
     finished_count += 1
 }
 
