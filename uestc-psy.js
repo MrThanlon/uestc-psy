@@ -156,16 +156,19 @@ function step() {
 function eva_init() {
     //重置
     unfinished_flag = false
-    //获取'前往作业'按钮
-    const btns = Array.prototype.slice.call(document.getElementsByClassName('j-quizBtn')).filter((e) => e.innerText === '前往作业')
-    //全部完毕，结束
-    if(curent_quiz >= btns.length) {
-        if(unfinished) {
-            console.log('你好像有' + unfinished + '个未完成的作业，节哀。')
+    setTimeout(() => {
+        //获取'前往作业'按钮
+        const btns = Array.prototype.slice.call(document.getElementsByClassName('j-quizBtn')).filter((e) => e.innerText === '前往作业')
+        //全部完毕，结束
+        if(curent_quiz >= btns.length) {
+            if(unfinished) {
+                console.log('你好像有' + unfinished + '个未完成的作业，节哀。')
+            }
+            return
         }
-    }
-    //进入单元作业
-    btns[curent_quiz].click()
+        //进入单元作业
+        btns[curent_quiz].click()
+    },1000)
     //需要互评的人数，有延迟
     setTimeout(() => {
         try {
@@ -177,7 +180,7 @@ function eva_init() {
             answer_count = 30 //因为延迟的麻烦，逻辑有点乱，先暂时这样
             unfinished_flag = true
         }
-    },1000)
+    },2000)
     //进入互评，注意如果之前点击过，则a标签是'继续进行互评'，同时读取到的数量会多1个，如果没点击过，则是'开始评分'
     setTimeout(() => {
         if(unfinished_flag)
@@ -189,11 +192,11 @@ function eva_init() {
         }
         else
             Array.prototype.slice.call(document.getElementsByTagName('a')).filter((e) => e.innerText === '开始评分')[0].click()
-    },2000)
+    },3000)
     //开始互评
     setTimeout(() => {
         step()
-    },3000)
+    },4000)
     //准备进入下一个单元
     curent_quiz += 1
 }
