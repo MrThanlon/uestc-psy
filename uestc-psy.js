@@ -33,6 +33,7 @@ let answer_count = 0 //需要点评的人数
 let finished_count = 0 //已经点评的人数
 let next_signal = 0 //记录setTimeout
 let curent_quiz = 0 //当前单元数
+let unfinished = 0 //未完成的作业
 
 //自评，5000ms
 function self_eva() {
@@ -91,6 +92,19 @@ function step() {
         return
     }
     const ratios = document.getElementsByClassName('d')
+    //没有写这个作业，应该也无法提交了，直接结束到下一单元吧
+    if(ratios.length === 0) {
+        unfinished += 1
+        //结束step循环
+        clearTimeout(next_signal)
+        //返回到上级
+        document.getElementsByClassName('j-backbtn')[1].click()
+        //下一单元
+        setTimeout(() => {
+            eva_init()
+        },1000)
+        return
+    }
     //自动9-10分
     ratios[random(9,10)].click()
     //点击点评框，虽然好像没什么用
@@ -125,8 +139,11 @@ function eva_init() {
     //获取'前往作业'按钮
     const btns = Array.prototype.slice.call(document.getElementsByClassName('j-quizBtn')).filter((e) => e.innerText === '前往作业')
     //全部完毕，结束
-    if(curent_quiz >= btns.length)
-        return
+    if(curent_quiz >= btns.length) {
+        if(unfinished) {
+            console.log('你好像有' + unfinished + '个未完成的作业，节哀。')
+        }
+    }
     //进入单元作业
     btns[curent_quiz].click()
     //需要互评的人数，有延迟
