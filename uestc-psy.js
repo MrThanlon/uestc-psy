@@ -35,44 +35,39 @@ let next_signal = 0 //记录setTimeout
 let curent_quiz = 0 //当前单元数
 let unfinished = 0 //未完成的作业
 
-//自评，5000ms
+//自评，6000ms
 function self_eva() {
     //获取自评按钮
-    const self_btns = Array.prototype.slice.call(document.getElementsByClassName('j-quizBtn')).filter((e) => e.innerText === '点击自评')
-    //已经自评过
-    if(self_btns.length === 0){
-        //返回单元列表
-        setTimeout(() => {
-            document.getElementsByClassName('j-backbtn')[0].click()
-        },5000)
-        return
-    }
+    const self_btns = Array.prototype.slice.call(document.getElementsByTagName('a')).filter((e) => e.innerText === '点击自评')
     //点击自评按钮
     self_btns[0].click()
-    //获取打分框
-    const ratios = document.getElementsByClassName('d')
-    //10分
-    ratios[10].click()
+    //打分，有延迟
+    setTimeout(() => {
+        //获取打分框
+        const ratios = document.getElementsByClassName('d')
+        //10分
+        ratios[10].click()
+    },1000)
     //点击点评框
     setTimeout(() => {
         document.getElementsByClassName('inputtxt')[0].focus()
-    },1000)
+    },2000)
     //点评
     setTimeout(() => {
         document.getElementsByName('inputtxt')[0].value = random_self_answer()
-    },2000)
+    },3000)
     //保存答案
     setTimeout(() => {
         document.getElementsByClassName('j-savedraftbtn')[0].click()
-    },3000)
+    },4000)
     //提交
     setTimeout(() => {
         document.getElementsByClassName('j-submitbtn')[0].click()
-    },4000)
+    },5000)
     //返回单元列表
     setTimeout(() => {
         document.getElementsByClassName('j-backbtn')[0].click()
-    },5000)
+    },6000)
 }
 
 //平均一个人6000ms
@@ -83,9 +78,23 @@ function step() {
         clearTimeout(next_signal)
         //返回到上级
         document.getElementsByClassName('j-backbtn')[1].click()
+        //获取自评按钮
+        const self_btns = Array.prototype.slice.call(document.getElementsByTagName('a')).filter((e) => e.innerText === '点击自评')
+        //已经自评过
+        if(self_btns.length === 0) {
+            //返回单元列表
+            setTimeout(() => {
+                document.getElementsByClassName('j-backbtn')[0].click()
+            },1000)
+            //下一单元
+            setTimeout(() => {
+                eva_init()
+            },2000)
+            return
+        }
         //自评
         self_eva()
-        //下一单元，自评需要5000ms
+        //下一单元，自评需要6000ms
         setTimeout(() => {
             eva_init()
         },7000)
