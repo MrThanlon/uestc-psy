@@ -156,6 +156,16 @@ function step() {
 function eva_init() {
     //重置
     unfinished_flag = false
+    //获取'前往作业'按钮
+    const btns = Array.prototype.slice.call(document.getElementsByClassName('j-quizBtn')).filter((e) => e.innerText === '前往作业')
+    //全部完毕，结束
+    if(curent_quiz >= btns.length) {
+        console.log('全部完成互评')
+        if(unfinished) {
+            console.log('不过你好像有' + unfinished + '个未完成的作业，节哀。')
+        }
+        return
+    }
     setTimeout(() => {
         //获取'前往作业'按钮
         const btns = Array.prototype.slice.call(document.getElementsByClassName('j-quizBtn')).filter((e) => e.innerText === '前往作业')
