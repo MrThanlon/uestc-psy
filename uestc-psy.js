@@ -1,6 +1,7 @@
 //设置项
 //是否答题者可见，false=不可见，true=可见
 const config_answer_visible = false
+//每个单元互评的题数
 const config_totals = 30
 
 function random(n,m) {
