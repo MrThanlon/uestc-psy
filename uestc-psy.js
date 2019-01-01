@@ -1,6 +1,7 @@
 //设置项
 //是否答题者可见，false=不可见，true=可见
 const config_answer_visible = false
+const config_totals = 30
 
 function random(n,m) {
     return Math.floor(Math.random() * (m - n + 1) + n)
@@ -182,12 +183,12 @@ function eva_init() {
     //需要互评的人数，有延迟
     setTimeout(() => {
         try {
-            answer_count = 30 - document.getElementsByClassName('j-listtable')[0].childElementCount
+            answer_count = config_totals - document.getElementsByClassName('j-listtable')[0].childElementCount
             finished_count = 0 //重置已完成
         }
         catch(err) {
             //没有写这个作业
-            answer_count = 30 //因为延迟的麻烦，逻辑有点乱，先暂时这样
+            answer_count = config_totals //因为延迟的麻烦，逻辑有点乱，先暂时这样
             unfinished_flag = true
         }
     },2000)
