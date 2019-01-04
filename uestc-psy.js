@@ -38,7 +38,7 @@ function random_self_answer() {
 let answer_count = 0 //需要点评的人数
 let finished_count = 0 //已经点评的人数
 let next_signal = 0 //记录setTimeout
-let curent_quiz = 0 //当前单元数
+let curent_quiz = -1 //当前单元数，因为一些逻辑原因所以是-1
 let unfinished = 0 //未完成的作业
 let unfinished_flag = false //作业未完成标记位
 
